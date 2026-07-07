@@ -4,66 +4,79 @@
 
 TrustTill
 
-Making informal merchants bankable from the payment evidence they already have.
+Making offline merchants bank-readable from the sales evidence they already have.
 
 Hackaholics 7.0 | Financial Inclusion
 
 ## Slide 2: Problem
 
-Informal merchants receive transfers, cash, POS payments, and WhatsApp orders every day.
+Messy evidence makes real merchants look invisible.
 
-But their business history is scattered, unstructured, and hard for banks to trust.
+Merchant reality:
 
-Result:
+- Cash sales
+- Transfer alerts
+- Paper receipts
+- WhatsApp notes
 
-- Weak records
-- Harder onboarding
-- Limited access to useful financial products
-- More fraud and dispute uncertainty
+Bank-readable proof:
+
+- Cashflow pattern
+- Evidence quality
+- Risk flags
+- Next best action
 
 ## Slide 3: Insight
 
-The evidence already exists.
+The AI does extraction and explanation.
 
-Payment alerts, receipts, customer names, order notes, and daily sales patterns can become a lightweight merchant record if structured properly.
+TrustTill uses AI to extract messy evidence and transparent rules to keep the verification logic explainable.
 
-## Slide 4: Solution
+Core loop:
 
-TrustTill converts messy merchant evidence into:
+- Extract
+- Link
+- Score
+- Explain
 
-- Cashflow records
-- Risk flags
-- Record quality signals
-- Credit-readiness profiles
-- A bank-facing merchant pipeline
+## Slide 4: Demo
 
-## Slide 5: Demo
+The prototype already shows the workflow.
 
-Before:
+Demo loop:
 
-Mama Kemi has transfer alerts and cash notes but no clean business profile.
+- Paste evidence
+- Parse record
+- Review flags
+- Open Wema Desk
 
-After:
+## Slide 5: Why Wema
 
-TrustTill shows her sales, risk review, record quality, and readiness score.
+Wema gets a practical inclusion pipeline:
 
-## Slide 6: Why Wema
+- Acquire active merchants who are ready for ALAT or SME banking.
+- Improve records without asking merchants to become accountants.
+- Review risk flags before any credit or support decision.
 
-TrustTill can help Wema:
+## Slide 6: Backend
 
-- Onboard micro-merchants into digital banking.
-- Identify promising campus and market merchants.
-- Support better savings and business discipline.
-- Prepare safer future lending pipelines.
-- Deliver financial inclusion through merchant evidence.
+The backend is an evidence engine.
+
+Build path:
+
+- Sources
+- Evidence ingestion
+- AI extraction
+- Matching
+- Wema-ready profile API
 
 ## Slide 7: Ask
 
-We want to pilot TrustTill with a small group of campus and market merchants.
+The ask is a 30-day pilot.
 
 Support needed:
 
-- Mentorship
-- Wema/ALAT API sandbox guidance
-- Merchant pilot access
-- Compliance and privacy review
+- 20 to 50 campus or market merchants
+- Mentorship and Wema/ALAT API guidance
+- Compliance feedback
+- Success metric: more verified records and clearer Wema review decisions
