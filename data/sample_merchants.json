@@ -1,0 +1,83 @@
+{
+  "merchants": [
+    {
+      "id": "kemi",
+      "name": "Mama Kemi Foods",
+      "type": "Campus food vendor",
+      "location": "Lagos",
+      "readinessScore": 78,
+      "recordQuality": 86,
+      "transactions": [
+        {
+          "amount": 12500,
+          "customer": "Adewale Sunday",
+          "memo": "lunch packs",
+          "source": "Transfer",
+          "status": "clear"
+        },
+        {
+          "amount": 8400,
+          "customer": "Mary Okon",
+          "memo": "rice and drinks",
+          "source": "Transfer",
+          "status": "clear"
+        },
+        {
+          "amount": 5000,
+          "customer": "Cash note",
+          "memo": "morning sales",
+          "source": "Cash",
+          "status": "review"
+        }
+      ]
+    },
+    {
+      "id": "cycle",
+      "name": "CycleFix Abeokuta",
+      "type": "Bicycle repair and dispatch support",
+      "location": "Ogun",
+      "readinessScore": 67,
+      "recordQuality": 72,
+      "transactions": [
+        {
+          "amount": 18000,
+          "customer": "Akin Repairs",
+          "memo": "gear service",
+          "source": "POS",
+          "status": "clear"
+        },
+        {
+          "amount": 4500,
+          "customer": "Cash note",
+          "memo": "tyre patch",
+          "source": "Cash",
+          "status": "review"
+        }
+      ]
+    },
+    {
+      "id": "bright",
+      "name": "BrightLearn Prints",
+      "type": "Student print and copy kiosk",
+      "location": "Akwa Ibom",
+      "readinessScore": 84,
+      "recordQuality": 91,
+      "transactions": [
+        {
+          "amount": 2200,
+          "customer": "Ini Etuk",
+          "memo": "project binding",
+          "source": "Transfer",
+          "status": "clear"
+        },
+        {
+          "amount": 15800,
+          "customer": "Class Rep BIO 302",
+          "memo": "bulk handouts",
+          "source": "Transfer",
+          "status": "clear"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TrustTill - Hackaholics 7.0 Demo</title>
+  <style>
+    :root {
+      --ink: #102022;
+      --muted: #617174;
+      --paper: #f7f4ee;
+      --panel: #fffdf8;
+      --line: #d9d1c5;
+      --teal: #003d48;
+      --teal-2: #176f75;
+      --magenta: #de1a4c;
+      --amber: #c98912;
+      --green: #16845c;
+      --blue: #2c5fbd;
+      --red: #bd2d2d;
+      --shadow: 0 14px 34px rgba(16, 32, 34, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(0, 61, 72, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(0, 61, 72, 0.05) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+      font-family: "Avenir Next", "Gill Sans", "Trebuchet MS", sans-serif;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .topbar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.92);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--teal);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--panel);
+      box-shadow: 4px 4px 0 var(--magenta);
+      font-family: Georgia, serif;
+      font-weight: 800;
+      color: var(--teal);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: var(--panel);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr) 320px;
+      gap: 18px;
+      padding: 18px;
+      align-items: start;
+    }
+
+    .rail,
+    .main,
+    .desk {
+      min-width: 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .merchant-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .merchant-button {
+      width: 100%;
+      min-height: 92px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--panel);
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+    }
+
+    .merchant-button:hover,
+    .merchant-button.active {
+      transform: translateY(-2px);
+      border-color: var(--teal);
+      box-shadow: 5px 5px 0 rgba(0, 61, 72, 0.16);
+    }
+
+    .merchant-button strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .merchant-button span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(22, 132, 92, 0.12);
+      flex: 0 0 auto;
+    }
+
+    .dot.warn {
+      background: var(--amber);
+      box-shadow: 0 0 0 3px rgba(201, 137, 18, 0.14);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.65fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .panel-head h2,
+    .panel-head h3 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .panel-body {
+      padding: 16px;
+    }
+
+    .merchant-name {
+      font-size: clamp(26px, 4vw, 48px);
+      font-weight: 900;
+      line-height: 0.96;
+      letter-spacing: 0;
+      margin: 0 0 12px;
+      color: var(--teal);
+      max-width: 720px;
+    }
+
+    .merchant-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      min-height: 96px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fffaf0;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .metric small {
+      display: block;
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 11px;
+    }
+
+    .score-card {
+      min-height: 100%;
+      display: grid;
+      align-content: center;
+      gap: 16px;
+      text-align: center;
+      background: var(--teal);
+      color: white;
+    }
+
+    .score {
+      width: 168px;
+      height: 168px;
+      border-radius: 50%;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      background:
+        conic-gradient(var(--magenta) calc(var(--score) * 1%), rgba(255, 255, 255, 0.2) 0);
+      position: relative;
+    }
+
+    .score::after {
+      content: "";
+      position: absolute;
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      background: var(--teal);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .score span {
+      position: relative;
+      z-index: 1;
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .score-card p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.74fr);
+      gap: 18px;
+    }
+
+    .alert-lab {
+      display: grid;
+      gap: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 126px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fffaf0;
+      color: var(--ink);
+      outline: none;
+      line-height: 1.45;
+    }
+
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0, 61, 72, 0.12);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      border: 1px solid var(--teal);
+      border-radius: 8px;
+      min-height: 40px;
+      padding: 9px 12px;
+      background: var(--teal);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 150ms ease, background 150ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: var(--teal-2);
+    }
+
+    .btn.secondary {
+      background: var(--panel);
+      color: var(--teal);
+    }
+
+    .btn.secondary:hover {
+      background: #edf4f2;
+    }
+
+    .evidence-list,
+    .risk-list,
+    .desk-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .evidence,
+    .risk,
+    .desk-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fffaf0;
+      min-height: 68px;
+    }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+    }
+
+    .evidence strong,
+    .risk strong,
+    .desk-item strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .evidence span,
+    .risk span,
+    .desk-item span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.42;
+    }
+
+    .amount {
+      font-weight: 900;
+      color: var(--teal);
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(22, 132, 92, 0.12);
+      color: var(--green);
+      white-space: nowrap;
+    }
+
+    .badge.warn {
+      background: rgba(201, 137, 18, 0.16);
+      color: #8a5b00;
+    }
+
+    .badge.bad {
+      background: rgba(189, 45, 45, 0.12);
+      color: var(--red);
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bar-row {
+      display: grid;
+      gap: 6px;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 999px;
+      background: #ebe3d7;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+
+    .bar:nth-child(2n) span {
+      background: var(--green);
+    }
+
+    .risk {
+      display: grid;
+      gap: 8px;
+    }
+
+    .risk header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .desk {
+      position: sticky;
+      top: 90px;
+    }
+
+    .desk-item {
+      display: grid;
+      gap: 8px;
+    }
+
+    .desk-score {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mini-meter {
+      height: 9px;
+      border-radius: 999px;
+      background: #ebe3d7;
+      overflow: hidden;
+    }
+
+    .mini-meter span {
+      display: block;
+      height: 100%;
+      background: var(--magenta);
+    }
+
+    .note {
+      border-left: 4px solid var(--magenta);
+      padding: 10px 12px;
+      background: #fff4f5;
+      color: #693441;
+      font-size: 12px;
+      line-height: 1.45;
+      border-radius: 0 8px 8px 0;
+    }
+
+    @media (max-width: 1360px) {
+      .workspace {
+        grid-template-columns: 220px minmax(0, 1fr);
+      }
+
+      .desk {
+        grid-column: 1 / -1;
+        position: static;
+      }
+    }
+
+    @media (max-width: 1040px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px;
+      }
+
+      .chips {
+        justify-content: flex-start;
+      }
+
+      .workspace,
+      .hero-grid,
+      .work-grid,
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace {
+        padding: 12px;
+      }
+
+      .merchant-list {
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        overflow-x: auto;
+        padding-bottom: 6px;
+      }
+
+      .merchant-button {
+        min-width: 180px;
+      }
+
+      .merchant-name {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">TT</div>
+        <div>
+          <h1>TrustTill</h1>
+          <p>Hackaholics 7.0 | Financial Inclusion</p>
+        </div>
+      </div>
+      <div class="chips" aria-label="Demo status">
+        <span class="chip">Merchant evidence</span>
+        <span class="chip">Risk scoring</span>
+        <span class="chip">Wema desk</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="rail">
+        <p class="section-title">Merchants</p>
+        <div class="merchant-list" id="merchantList"></div>
+      </aside>
+
+      <section class="main">
+        <div class="hero-grid">
+          <article class="panel">
+            <div class="panel-body">
+              <p class="section-title">Merchant profile</p>
+              <h2 class="merchant-name" id="merchantName"></h2>
+              <div class="merchant-meta" id="merchantMeta"></div>
+              <div class="metric-grid">
+                <div class="metric">
+                  <b>30-day sales</b>
+                  <strong id="salesMetric"></strong>
+                  <small>Verified and estimated inflows</small>
+                </div>
+                <div class="metric">
+                  <b>Evidence count</b>
+                  <strong id="countMetric"></strong>
+                  <small>Transfers, receipts, notes</small>
+                </div>
+                <div class="metric">
+                  <b>Risk flags</b>
+                  <strong id="riskMetric"></strong>
+                  <small>Needs human review</small>
+                </div>
+                <div class="metric">
+                  <b>Record quality</b>
+                  <strong id="qualityMetric"></strong>
+                  <small>Completeness estimate</small>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel score-card">
+            <div class="panel-body">
+              <p class="section-title" style="color: rgba(255,255,255,0.72);">Credit readiness</p>
+              <div class="score" id="scoreDial"><span id="scoreValue"></span></div>
+              <p id="scoreText"></p>
+            </div>
+          </article>
+        </div>
+
+        <div class="work-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Payment Evidence Inbox</h3>
+              <span class="badge" id="lastStatus">Live demo</span>
+            </div>
+            <div class="panel-body alert-lab">
+              <textarea id="alertInput" aria-label="Payment alert input"></textarea>
+              <div class="button-row">
+                <button class="btn" id="parseBtn" type="button">Parse alert</button>
+                <button class="btn secondary" id="clearSample" type="button">Clear sample</button>
+                <button class="btn secondary" id="riskSample" type="button">Risk sample</button>
+              </div>
+              <ul class="evidence-list" id="evidenceList"></ul>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Readiness Signals</h3>
+              <span class="badge" id="readinessBadge">Bankable path</span>
+            </div>
+            <div class="panel-body">
+              <div class="bar-list" id="barList"></div>
+              <div style="height:14px"></div>
+              <p class="note" id="recommendation"></p>
+            </div>
+          </article>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Risk Review</h3>
+            <span class="badge warn" id="riskBadge"></span>
+          </div>
+          <div class="panel-body">
+            <ul class="risk-list" id="riskList"></ul>
+          </div>
+        </article>
+      </section>
+
+      <aside class="desk">
+        <p class="section-title">Wema Desk</p>
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Merchant Pipeline</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="desk-list" id="deskList"></ul>
+          </div>
+        </article>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const merchants = [
+      {
+        id: "kemi",
+        name: "Mama Kemi Foods",
+        type: "Campus food vendor",
+        location: "Lagos",
+        channel: "Transfers + cash notes",
+        score: 78,
+        quality: 86,
+        signals: {
+          consistency: 82,
+          repeatCustomers: 74,
+          salesGrowth: 69,
+          disputeRate: 88,
+          recordCompleteness: 86
+        },
+        recommendation: "Offer ALAT for Business onboarding, daily savings target, and 30-day merchant evidence review.",
+        transactions: [
+          { amount: 12500, customer: "Adewale Sunday", memo: "lunch packs", source: "Transfer", status: "clear", time: "2:14 PM" },
+          { amount: 8400, customer: "Mary Okon", memo: "rice and drinks", source: "Transfer", status: "clear", time: "1:02 PM" },
+          { amount: 5000, customer: "Cash note", memo: "morning sales", source: "Cash", status: "review", time: "10:40 AM" },
+          { amount: 12500, customer: "Adewale Sunday", memo: "duplicate proof", source: "Transfer", status: "review", time: "2:17 PM" }
+        ]
+      },
+      {
+        id: "cycle",
+        name: "CycleFix Abeokuta",
+        type: "Bicycle repair and dispatch support",
+        location: "Ogun",
+        channel: "POS + transfer receipts",
+        score: 67,
+        quality: 72,
+        signals: {
+          consistency: 68,
+          repeatCustomers: 61,
+          salesGrowth: 72,
+          disputeRate: 73,
+          recordCompleteness: 72
+        },
+        recommendation: "Move to verified invoice links and separate personal transfers from business inflows before credit review.",
+        transactions: [
+          { amount: 18000, customer: "Akin Repairs", memo: "gear service", source: "POS", status: "clear", time: "11:20 AM" },
+          { amount: 4500, customer: "Cash note", memo: "tyre patch", source: "Cash", status: "review", time: "12:30 PM" },
+          { amount: 37000, customer: "Musa Logistics", memo: "fleet repair", source: "Transfer", status: "clear", time: "3:15 PM" }
+        ]
+      },
+      {
+        id: "bright",
+        name: "BrightLearn Prints",
+        type: "Student print and copy kiosk",
+        location: "Akwa Ibom",
+        channel: "Bank alerts + WhatsApp orders",
+        score: 84,
+        quality: 91,
+        signals: {
+          consistency: 90,
+          repeatCustomers: 81,
+          salesGrowth: 78,
+          disputeRate: 92,
+          recordCompleteness: 91
+        },
+        recommendation: "Ready for SME account onboarding and a small equipment-finance pilot after human verification.",
+        transactions: [
+          { amount: 2200, customer: "Ini Etuk", memo: "project binding", source: "Transfer", status: "clear", time: "9:18 AM" },
+          { amount: 15800, customer: "Class Rep BIO 302", memo: "bulk handouts", source: "Transfer", status: "clear", time: "10:05 AM" },
+          { amount: 7400, customer: "WhatsApp order", memo: "past questions", source: "Receipt", status: "clear", time: "1:55 PM" }
+        ]
+      }
+    ];
+
+    let selectedId = "kemi";
+
+    const formatMoney = (value) => `NGN ${value.toLocaleString("en-NG")}`;
+
+    function selectedMerchant() {
+      return merchants.find((merchant) => merchant.id === selectedId);
+    }
+
+    function transactionRisk(transaction, merchant) {
+      const memo = transaction.memo.toLowerCase();
+      const median = merchant.transactions
+        .map((item) => item.amount)
+        .sort((a, b) => a - b)[Math.floor(merchant.transactions.length / 2)] || 1;
+
+      if (memo.includes("refund") || memo.includes("reverse") || memo.includes("hold")) {
+        return { status: "review", label: "Reversal risk", detail: "Memo suggests a payment that may not settle cleanly." };
+      }
+
+      if (!transaction.customer || transaction.customer.toLowerCase().includes("unknown")) {
+        return { status: "review", label: "Weak customer proof", detail: "Customer identity is missing or unclear." };
+      }
+
+      if (transaction.amount > median * 4) {
+        return { status: "review", label: "Unusual amount", detail: "This amount is far above the current merchant pattern." };
+      }
+
+      const duplicate = merchant.transactions.some((item) =>
+        item.customer === transaction.customer &&
+        item.amount === transaction.amount &&
+        item.time !== transaction.time
+      );
+
+      if (duplicate) {
+        return { status: "review", label: "Possible duplicate", detail: "Same customer and amount already appear in the evidence trail." };
+      }
+
+      return { status: "clear", label: "Clear evidence", detail: "Looks consistent with the merchant's recent business pattern." };
+    }
+
+    function parseAlert(text) {
+      const amountMatch = text.replace(/,/g, "").match(/(?:NGN|N|CR)?\s*([0-9]+(?:\.[0-9]{1,2})?)/i);
+      const fromMatch = text.match(/from\s+([A-Z][A-Z\s.'-]{2,})/i);
+      const memoMatch = text.match(/\/\s*([^/]+?)(?:\/|$)/);
+      const timeMatch = text.match(/([0-9]{1,2}:[0-9]{2}\s*(?:AM|PM)?)/i);
+
+      return {
+        amount: amountMatch ? Math.round(Number(amountMatch[1])) : 0,
+        customer: fromMatch ? fromMatch[1].trim().replace(/\s+/g, " ") : "Unknown customer",
+        memo: memoMatch ? memoMatch[1].trim() : "merchant payment",
+        source: text.toLowerCase().includes("pos") ? "POS" : "Transfer",
+        status: "clear",
+        time: timeMatch ? timeMatch[1].toUpperCase() : "Now"
+      };
+    }
+
+    function renderMerchants() {
+      const list = document.getElementById("merchantList");
+      list.innerHTML = "";
+
+      merchants.forEach((merchant) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `merchant-button ${merchant.id === selectedId ? "active" : ""}`;
+        button.innerHTML = `
+          <strong>${merchant.name}</strong>
+          <span>${merchant.type}</span>
+          <span>${merchant.location} | ${merchant.channel}</span>
+          <span class="status-row"><i class="dot ${merchant.score < 75 ? "warn" : ""}"></i>${merchant.score}% ready</span>
+        `;
+        button.addEventListener("click", () => {
+          selectedId = merchant.id;
+          render();
+        });
+        list.appendChild(button);
+      });
+    }
+
+    function renderProfile() {
+      const merchant = selectedMerchant();
+      const total = merchant.transactions.reduce((sum, item) => sum + item.amount, 0);
+      const risks = merchant.transactions.filter((item) => item.status !== "clear").length;
+
+      document.getElementById("merchantName").textContent = merchant.name;
+      document.getElementById("merchantMeta").innerHTML = `
+        <span>${merchant.type}</span>
+        <span>${merchant.location}</span>
+        <span>${merchant.channel}</span>
+      `;
+      document.getElementById("salesMetric").textContent = formatMoney(total);
+      document.getElementById("countMetric").textContent = merchant.transactions.length;
+      document.getElementById("riskMetric").textContent = risks;
+      document.getElementById("qualityMetric").textContent = `${merchant.quality}%`;
+      document.getElementById("scoreValue").textContent = merchant.score;
+      document.getElementById("scoreDial").style.setProperty("--score", merchant.score);
+      document.getElementById("scoreText").textContent = merchant.score >= 80
+        ? "Ready for bank review with strong evidence quality."
+        : "Promising, but needs more verified records before credit review.";
+      document.getElementById("recommendation").textContent = merchant.recommendation;
+      document.getElementById("readinessBadge").textContent = merchant.score >= 80 ? "Review ready" : "Build record";
+      document.getElementById("readinessBadge").className = `badge ${merchant.score >= 80 ? "" : "warn"}`;
+    }
+
+    function renderEvidence() {
+      const merchant = selectedMerchant();
+      const list = document.getElementById("evidenceList");
+      list.innerHTML = "";
+
+      merchant.transactions.slice().reverse().forEach((item) => {
+        const row = document.createElement("li");
+        row.className = "evidence";
+        row.innerHTML = `
+          <div>
+            <strong>${item.customer}</strong>
+            <span>${item.source} | ${item.memo} | ${item.time}</span>
+          </div>
+          <div>
+            <div class="amount">${formatMoney(item.amount)}</div>
+            <span class="badge ${item.status === "clear" ? "" : "warn"}">${item.status === "clear" ? "clear" : "review"}</span>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function renderBars() {
+      const merchant = selectedMerchant();
+      const labels = {
+        consistency: "Transaction consistency",
+        repeatCustomers: "Repeat customers",
+        salesGrowth: "Sales growth",
+        disputeRate: "Low dispute risk",
+        recordCompleteness: "Record completeness"
+      };
+      const list = document.getElementById("barList");
+      list.innerHTML = "";
+
+      Object.entries(merchant.signals).forEach(([key, value]) => {
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        row.innerHTML = `
+          <div class="bar-label"><span>${labels[key]}</span><span>${value}%</span></div>
+          <div class="bar"><span style="width:${value}%"></span></div>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function renderRisk() {
+      const merchant = selectedMerchant();
+      const list = document.getElementById("riskList");
+      const riskItems = merchant.transactions
+        .map((item) => ({ item, risk: transactionRisk(item, merchant) }))
+        .filter(({ risk }) => risk.status !== "clear");
+
+      list.innerHTML = "";
+      document.getElementById("riskBadge").textContent = `${riskItems.length} to review`;
+
+      if (!riskItems.length) {
+        const empty = document.createElement("li");
+        empty.className = "risk";
+        empty.innerHTML = "<strong>No active risk flags</strong><span>Evidence trail looks consistent for this demo profile.</span>";
+        list.appendChild(empty);
+        return;
+      }
+
+      riskItems.forEach(({ item, risk }) => {
+        const row = document.createElement("li");
+        row.className = "risk";
+        row.innerHTML = `
+          <header>
+            <strong>${risk.label}</strong>
+            <span class="badge ${risk.label.includes("Unusual") ? "bad" : "warn"}">${formatMoney(item.amount)}</span>
+          </header>
+          <span>${risk.detail}</span>
+          <span>${item.customer} | ${item.memo} | ${item.time}</span>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function renderDesk() {
+      const list = document.getElementById("deskList");
+      list.innerHTML = "";
+
+      merchants
+        .slice()
+        .sort((a, b) => b.score - a.score)
+        .forEach((merchant) => {
+          const item = document.createElement("li");
+          item.className = "desk-item";
+          item.innerHTML = `
+            <div class="desk-score">
+              <strong>${merchant.name}</strong>
+              <span class="badge ${merchant.score >= 80 ? "" : "warn"}">${merchant.score}%</span>
+            </div>
+            <div class="mini-meter"><span style="width:${merchant.score}%"></span></div>
+            <span>${merchant.score >= 80 ? "Pilot candidate" : "Needs record building"} | ${merchant.location}</span>
+          `;
+          list.appendChild(item);
+        });
+    }
+
+    function render() {
+      renderMerchants();
+      renderProfile();
+      renderEvidence();
+      renderBars();
+      renderRisk();
+      renderDesk();
+    }
+
+    function setSample(kind) {
+      const input = document.getElementById("alertInput");
+      input.value = kind === "risk"
+        ? "CR 98000 from UNKNOWN CUSTOMER / reverse check hold / 4:42 PM"
+        : "CR 12500 from ADEWALE SUNDAY / lunch packs / 2:14 PM";
+    }
+
+    document.getElementById("parseBtn").addEventListener("click", () => {
+      const input = document.getElementById("alertInput");
+      const merchant = selectedMerchant();
+      const parsed = parseAlert(input.value);
+
+      if (!parsed.amount) {
+        document.getElementById("lastStatus").textContent = "Amount missing";
+        document.getElementById("lastStatus").className = "badge bad";
+        return;
+      }
+
+      const risk = transactionRisk(parsed, merchant);
+      parsed.status = risk.status;
+      merchant.transactions.push(parsed);
+      merchant.score = Math.max(48, Math.min(94, merchant.score + (risk.status === "clear" ? 2 : -3)));
+      merchant.quality = Math.max(52, Math.min(96, merchant.quality + (risk.status === "clear" ? 1 : -2)));
+      merchant.signals.recordCompleteness = merchant.quality;
+      merchant.signals.disputeRate = Math.max(40, Math.min(96, merchant.signals.disputeRate + (risk.status === "clear" ? 1 : -4)));
+
+      document.getElementById("lastStatus").textContent = risk.label;
+      document.getElementById("lastStatus").className = `badge ${risk.status === "clear" ? "" : "warn"}`;
+      input.value = "";
+      render();
+    });
+
+    document.getElementById("clearSample").addEventListener("click", () => setSample("clear"));
+    document.getElementById("riskSample").addEventListener("click", () => setSample("risk"));
+
+    setSample("clear");
+    render();
+  </script>
+</body>
+</html>
