@@ -37,6 +37,18 @@ The demo is a static, frontend-only prototype. It includes seeded merchant profi
 4. Watch the evidence count, readiness score, and risk review update.
 5. Use **Risk sample** to show a suspicious payment alert.
 
+## User Flow
+
+```mermaid
+flowchart LR
+    A["Merchant records messy sales evidence"] --> B["AI extracts amount, date, customer, channel"]
+    B --> C["TrustTill links related evidence"]
+    C --> D["Confidence and risk rules run"]
+    D --> E["Bank-readiness profile"]
+    E --> F["Wema officer reviews"]
+    F --> G["Onboard, request more proof, or monitor"]
+```
+
 ## Why This Matters To Wema
 
 TrustTill is not trying to replace banking infrastructure. It is an evidence layer that can help Wema identify, onboard, and support informal merchants who are already economically active but not yet bankable.

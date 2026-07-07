@@ -6,6 +6,22 @@ The backend goal is simple:
 
 > Accept messy merchant evidence, normalize it into structured records, link related evidence, score confidence transparently, and expose a Wema-readable merchant profile.
 
+## System Flow
+
+```mermaid
+flowchart TD
+    A["Evidence sources<br/>cash, bank alerts, POS, receipts, WhatsApp, inventory"] --> B["Evidence ingestion API"]
+    B --> C["Extraction service"]
+    C --> D["Normalized EvidenceItem records"]
+    D --> E["Matching and reconciliation"]
+    E --> F["SaleEvent ledger"]
+    F --> G["Confidence scoring"]
+    F --> H["Risk review"]
+    G --> I["MerchantProfile API"]
+    H --> I
+    I --> J["Wema Desk pipeline"]
+```
+
 ## Core Services
 
 ### 1. Evidence Ingestion
