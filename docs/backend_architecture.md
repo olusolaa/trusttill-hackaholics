@@ -184,8 +184,8 @@ Example response:
 ## MVP Build Plan
 
 1. Static demo with seeded merchant data and rule-based parsing.
-2. Node/Express or FastAPI backend for evidence ingestion and profile generation.
-3. SQLite/PostgreSQL schema for merchants, evidence, sale events, and risk flags.
+2. Go backend for evidence ingestion, profile generation, risk review, and Wema pipeline APIs.
+3. PostgreSQL or SQLite schema for merchants, evidence, sale events, and risk flags.
 4. LLM extraction for messy text, guarded by deterministic validation rules.
 5. Wema Desk view for pipeline review.
 6. Optional GitHub Pages frontend plus hosted API on Render/Fly/Vercel.
