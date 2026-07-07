@@ -1,6 +1,6 @@
-# TrustTill Judge Q&A
+# TrustTill Product FAQ
 
-Use this to prepare for Hackaholics judging.
+This FAQ explains the product reasoning, implementation scope, and pilot path behind TrustTill.
 
 ## 1. Why is this a financial inclusion problem?
 
@@ -47,20 +47,20 @@ Start with 20 to 50 merchants in a campus or market cluster. Ask them to import 
 
 TrustTill does not ask informal merchants to become accountants. It makes the business evidence they already have count.
 
-## Quick Rebuttals
+## Implementation Notes
 
-If asked "Is this too ambitious?":
+### Is this too ambitious?
 
 The hackathon MVP is intentionally narrow. It demonstrates parsing, risk review, readiness scoring, and Wema pipeline logic with seeded data and a working interface.
 
-If asked "Is this accurate enough for lending?":
+### Is this accurate enough for lending?
 
 It should not make automated lending decisions. It prepares cleaner evidence for human review and future supervised models.
 
-If asked "Can merchants use it?":
+### Can merchants use it?
 
 The first workflow is simple: paste alerts, add cash notes, review flags, and see a readiness profile. The next version should support SMS/WhatsApp import to reduce manual work.
 
-If asked "Why Wema specifically?":
+### Why Wema specifically?
 
 Wema already positions Hackaholics around innovation and ALAT-driven digital banking. TrustTill gives Wema a practical way to convert informal merchant activity into digital banking relationships.

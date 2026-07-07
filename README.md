@@ -76,7 +76,7 @@ Mobile:
 - `docs/trusttill_pitch_deck.pptx` - editable seven-slide pitch deck
 - `docs/pitch_deck.md` - slide outline
 - `docs/demo_script.md` - 90-second and 3-minute demo scripts
-- `docs/judge_qa.md` - likely judge questions and strong answers
+- `docs/product_faq.md` - product reasoning, scope, and pilot answers
 
 ## Prototype Features
 
@@ -144,8 +144,8 @@ Memorable judge line:
     ├── demo_script.md
     ├── backend_architecture.md
     ├── deployment.md
-    ├── judge_qa.md
     ├── pitch_deck.md
+    ├── product_faq.md
     └── trusttill_pitch_deck.pptx
 ```
 
